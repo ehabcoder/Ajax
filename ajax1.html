@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax 1 - Text file</title>
+</head>
+<body>
+    <button id="button">Get Text File</button>
+    <br><br>
+    <div class="text"></div>
+
+    <script>
+        // Create event listener
+        document.getElementById('button').addEventListener('click', loadText);
+
+        function loadText() {
+            // Create XHR Object
+            var xhr = new XMLHttpRequest();
+            // Open - type, url/file, async
+            xhr.open('GET', 'sample.txt', true);
+
+            // console.log('ReadyState: ', xhr.readyState);
+
+            // optional -- used for loaders 
+            // xhr.onprogress = function() {
+            //     console.log('ReadyState: ', xhr.readyState);
+            // }
+
+            xhr.onerror = function() {
+                console.log('Request Error...');
+            }
+
+
+            xhr.onload = function() {
+                if(this.status === 200) {
+                    document.querySelector('.text').innerHTML = xhr.responseText;
+                } else if(this.status == 404) {
+                    document.querySelector('.text').innerHTML = 'Not Found';
+                }
+            }
+
+            /// The old way of doing onload
+            // xhr.onreadystatechange = function() {
+            //     console.log('ReadyState: ', xhr.readyState);
+            //     if(this.readyState == 4 && this.status == 200) {
+            //         console.log(this.responseText)
+            //     }
+            // }
+
+            // Sends Request
+            xhr.send()
+        }
+    </script>
+</body>
+</html>
